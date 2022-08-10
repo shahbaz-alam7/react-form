@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import { Route, Routes } from "react-router-dom";
+import About from "./Components/About";
+import Error from "./Components/Error";
+import MainPage from "./MainPage";
+import Navbar from "./Components/Navbar";
+import Card from "./Card";
+import Footer from "./Components/Footer";
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import { useState } from "react";
 
-function App() {
+const App = () => {
+  const [cardContent, setcardContent] = useState([]);
+
+  console.log(cardContent);
+  const addingVal = (value) => {
+    setcardContent((oldVal) => {
+      return [...oldVal, value];
+    });
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<MainPage passVal={addingVal} />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/users" element={<Card data={cardContent} />} />
+        <Route path="*" element={<Error />} />
+      </Routes>
+      <Footer />
+    </>
   );
-}
+};
 
 export default App;
